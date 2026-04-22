@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BEST FOOD | أفضل مطعم</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Tajawal:wght@300;400;500;700;800&family=Cinzel:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #C0392B;
+      --red-dark: #922B21;
+      --orange: #E67E22;
+      --gold: #F39C12;
+      --cream: #FDF6EC;
+      --dark: #1A0A00;
+      --charcoal: #2C1810;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Tajawal', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+    html { scroll-behavior: smooth; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+    /* LANG SWITCHER — inside navbar */
+    .lang-switcher {
+      display: flex; gap: 0; border-radius: 50px;
+      overflow: hidden; border: 1px solid rgba(243,156,18,0.45);
+      flex-shrink: 0;
+    }
+    .lang-btn {
+      padding: 6px 16px; font-family: 'Tajawal', sans-serif; font-weight: 700;
+      font-size: 0.78rem; border: none; cursor: pointer; transition: all 0.25s;
+      letter-spacing: 0.5px; line-height: 1;
+    }
+    .lang-btn.ar { background: transparent; color: #d4b896; }
+    .lang-btn.fr { background: transparent; color: #d4b896; }
+    .lang-btn.ar.active { background: var(--gold); color: var(--dark); }
+    .lang-btn.fr.active { background: var(--red); color: white; }
+    .lang-btn:not(.active):hover { color: var(--gold); }
+
+    /* NAVBAR */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(26,10,0,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(192,57,43,0.3);
+      transition: all 0.3s ease;
+    }
+    .nav-logo {
+      font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--gold);
+      letter-spacing: 3px; text-shadow: 0 0 20px rgba(243,156,18,0.4);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo span { font-size: 1.4rem; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: #f5e6d3; font-size: 0.95rem; font-weight: 500;
+      text-decoration: none; transition: color 0.2s; cursor: pointer;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--red); color: white; padding: 10px 24px;
+      border-radius: 50px; font-weight: 700; border: none; cursor: pointer;
+      font-size: 0.9rem; font-family: 'Tajawal', sans-serif; transition: all 0.2s;
+    }
+    .nav-cta:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .hamburger { display: none; background: none; border: none; color: var(--gold); cursor: pointer; }
+    @media(max-width:768px) {
+      .nav-links { display: none; }
+      .nav-cta-desktop { display: none; }
+      .hamburger { display: block; }
+      .lang-switcher { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column; position: absolute;
+        top: 100%; left: 0; right: 0; background: rgba(26,10,0,0.97);
+        padding: 20px 32px; gap: 16px;
+      }
+      .lang-switcher { top: 8px; }
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(rgba(26,10,0,0.65), rgba(26,10,0,0.75)),
+                  url('home-hero.jpg') center/cover no-repeat;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(192,57,43,0.1) 0%, transparent 60%, rgba(243,156,18,0.05) 100%);
+    }
+    .hero-content { position: relative; z-index: 2; text-align: center; padding: 40px 20px; }
+    .hero-brand {
+      font-family: 'Cinzel', serif; font-size: clamp(3rem, 10vw, 7rem);
+      color: white; line-height: 1; margin-bottom: 8px;
+      text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+      letter-spacing: 6px;
+    }
+    .hero-brand span { color: var(--gold); display: block; }
+    .hero-tagline-ar { color: #f5e6d3; font-size: clamp(1rem, 2.5vw, 1.25rem); font-weight: 300; margin-bottom: 4px; }
+    .hero-tagline-fr { color: #d4b896; font-size: clamp(0.85rem, 2vw, 1rem); font-style: italic; margin-bottom: 40px; }
+    .hero-badge {
+      display: inline-block; background: rgba(192,57,43,0.25);
+      border: 1px solid rgba(192,57,43,0.6);
+      color: var(--gold); padding: 8px 22px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 500; margin-bottom: 28px;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--red); color: white; padding: 16px 40px; border-radius: 50px;
+      font-weight: 700; font-size: 1.05rem; border: none; cursor: pointer;
+      font-family: 'Tajawal', sans-serif; transition: all 0.3s;
+      box-shadow: 0 8px 32px rgba(192,57,43,0.4);
+    }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(192,57,43,0.5); }
+    .btn-outline {
+      background: transparent; color: var(--gold); padding: 16px 40px;
+      border-radius: 50px; font-weight: 700; font-size: 1.05rem;
+      border: 2px solid var(--gold); cursor: pointer;
+      font-family: 'Tajawal', sans-serif; transition: all 0.3s;
+    }
+    .btn-outline:hover { background: var(--gold); color: var(--dark); transform: translateY(-3px); }
+    .hero-stats { display: flex; gap: 48px; justify-content: center; margin-top: 60px; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--gold); font-weight: 900; }
+    .stat-label { color: #9a7a60; font-size: 0.82rem; font-weight: 500; margin-top: 4px; }
+
+    /* SECTION COMMON */
+    .section { padding: 100px 20px; }
+    .section-dark { background: var(--charcoal); }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-eyebrow {
+      display: inline-block; color: var(--red); font-weight: 700;
+      font-size: 0.82rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); color: var(--dark); line-height: 1.2; }
+    .section-dark .section-title { color: #fff; }
+    .section-title span { color: var(--red); }
+    .section-line { width: 60px; height: 4px; background: linear-gradient(90deg, var(--red), var(--orange)); border-radius: 2px; margin: 20px auto 0; }
+
+    /* ====== CATEGORY MENU SYSTEM ====== */
+    #categoriesView, #dishesView { transition: opacity 0.35s ease; }
+    #categoriesView.fade-out, #dishesView.fade-out { opacity: 0; pointer-events: none; }
+
+    /* CATEGORIES GRID */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px; max-width: 800px; margin: 0 auto;
+    }
+    @media(max-width:600px) { .categories-grid { grid-template-columns: 1fr; max-width: 380px; } }
+
+    .category-card {
+      border-radius: 24px; overflow: hidden; cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative; aspect-ratio: 4/3;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+    .category-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 24px 60px rgba(192,57,43,0.2); }
+    .category-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .category-card:hover img { transform: scale(1.08); }
+    .category-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,10,0,0.85) 0%, rgba(26,10,0,0.2) 60%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 24px;
+    }
+    .category-name-ar {
+      font-family: 'Playfair Display', serif; font-size: 1.7rem;
+      color: white; font-weight: 700; line-height: 1.1;
+    }
+    .category-name-fr {
+      color: var(--gold); font-size: 0.9rem; font-style: italic; margin-top: 4px;
+    }
+    .category-count {
+      margin-top: 10px; display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(192,57,43,0.85); color: white;
+      padding: 5px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 700;
+      width: fit-content;
+    }
+    .category-arrow {
+      position: absolute; top: 18px; left: 18px;
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(243,156,18,0.9); display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--dark);
+      transform: translateX(10px); opacity: 0;
+      transition: all 0.3s;
+    }
+    .category-card:hover .category-arrow { transform: translateX(0); opacity: 1; }
+
+    /* DISHES VIEW */
+    #dishesView { display: none; }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(192,57,43,0.12); border: 2px solid rgba(192,57,43,0.35);
+      color: var(--red); padding: 12px 28px; border-radius: 50px;
+      font-weight: 700; font-size: 0.95rem; cursor: pointer;
+      font-family: 'Tajawal', sans-serif; transition: all 0.25s;
+      margin: 0 auto 40px; display: flex; width: fit-content;
+    }
+    .back-btn:hover { background: var(--red); color: white; border-color: var(--red); transform: translateX(5px); }
+    .back-icon { font-size: 1.1rem; transition: transform 0.25s; }
+    .back-btn:hover .back-icon { transform: translateX(4px); }
+
+    .dishes-category-title {
+      text-align: center; margin-bottom: 36px;
+    }
+    .dishes-category-title h3 {
+      font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--dark);
+    }
+    .dishes-category-title p { color: #8B7355; font-style: italic; margin-top: 4px; }
+
+    .dishes-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px; max-width: 1000px; margin: 0 auto;
+    }
+
+    .dish-card {
+      background: #fff; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer;
+    }
+    .dish-card:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(192,57,43,0.15); }
+    .dish-img {
+      height: 220px; overflow: hidden; position: relative;
+      background: #f5ede0;
+    }
+    .dish-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .dish-card:hover .dish-img img { transform: scale(1.07); }
+    .dish-body { padding: 20px 24px 24px; }
+    .dish-name-ar { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--dark); margin-bottom: 4px; font-weight: 700; }
+    .dish-name-fr { color: #9a7a60; font-size: 0.85rem; font-style: italic; margin-bottom: 10px; }
+    .dish-desc { color: #8B7355; font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px; }
+    .dish-footer { display: flex; align-items: center; justify-content: space-between; }
+    .dish-price { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--red); font-weight: 900; }
+    .dish-price span { font-size: 0.8rem; font-family: 'Tajawal', sans-serif; font-weight: 400; color: #9a7a60; }
+    .order-btn {
+      background: var(--red); color: white; padding: 10px 22px; border-radius: 50px;
+      font-weight: 700; font-size: 0.88rem; border: none; cursor: pointer;
+      font-family: 'Tajawal', sans-serif; transition: all 0.2s;
+    }
+    .order-btn:hover { background: var(--red-dark); transform: scale(1.05); }
+
+    /* DRINKS SECTION */
+    .drinks-section { background: var(--charcoal); padding: 80px 20px; }
+    .drinks-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px; max-width: 900px; margin: 0 auto;
+    }
+    .drink-card {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(243,156,18,0.2);
+      border-radius: 18px; overflow: hidden; transition: all 0.3s;
+    }
+    .drink-card:hover { transform: translateY(-6px); border-color: rgba(243,156,18,0.5); box-shadow: 0 12px 36px rgba(0,0,0,0.3); }
+    .drink-img { height: 180px; overflow: hidden; background: #2c1810; }
+    .drink-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .drink-card:hover .drink-img img { transform: scale(1.08); }
+    .drink-body { padding: 16px 20px 20px; }
+    .drink-name-ar { font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 3px; }
+    .drink-name-fr { color: var(--gold); font-size: 0.8rem; font-style: italic; margin-bottom: 8px; }
+    .drink-desc { color: #9a7a60; font-size: 0.85rem; line-height: 1.5; margin-bottom: 12px; }
+    .drink-footer { display: flex; align-items: center; justify-content: space-between; }
+    .drink-price { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--gold); font-weight: 900; }
+    .drink-order-btn {
+      background: rgba(243,156,18,0.2); color: var(--gold); padding: 8px 18px;
+      border-radius: 50px; font-weight: 700; font-size: 0.85rem; border: 1px solid rgba(243,156,18,0.4);
+      cursor: pointer; font-family: 'Tajawal', sans-serif; transition: all 0.2s;
+    }
+    .drink-order-btn:hover { background: var(--gold); color: var(--dark); }
+
+    /* DELIVERY */
+    .delivery-section {
+      background: linear-gradient(135deg, #1A0A00 0%, #3B0F0F 50%, #2C1810 100%);
+      padding: 100px 20px; position: relative; overflow: hidden;
+    }
+    .delivery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1100px; margin: 0 auto; }
+    @media(max-width:768px) { .delivery-grid { grid-template-columns: 1fr; gap: 48px; } }
+    .delivery-features { display: flex; flex-direction: column; gap: 28px; margin-top: 40px; }
+    .delivery-feature { display: flex; gap: 20px; align-items: flex-start; }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      background: rgba(192,57,43,0.2); border: 1px solid rgba(192,57,43,0.4);
+      font-size: 1.4rem;
+    }
+    .feature-text h4 { color: #fff; font-size: 1.05rem; font-weight: 700; margin-bottom: 3px; }
+    .feature-text h4 em { color: var(--gold); font-style: italic; font-size: 0.85rem; display: block; margin-top: 1px; }
+    .feature-text p { color: #9a7a60; font-size: 0.88rem; line-height: 1.6; }
+    .moto-container { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .moto-emoji { font-size: 7rem; animation: motoRide 3s ease-in-out infinite; display: block; filter: drop-shadow(0 0 30px rgba(230,126,34,0.4)); }
+    @keyframes motoRide {
+      0%,100% { transform: translateX(0) rotate(-2deg); }
+      25% { transform: translateX(20px) rotate(2deg) translateY(-8px); }
+      50% { transform: translateX(-10px) rotate(-1deg) translateY(-4px); }
+      75% { transform: translateX(15px) rotate(2deg) translateY(-10px); }
+    }
+    .delivery-badge {
+      margin-top: 24px; background: rgba(192,57,43,0.2);
+      border: 1px solid rgba(192,57,43,0.4); padding: 14px 28px;
+      border-radius: 50px; text-align: center;
+    }
+    .delivery-badge .time { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold); font-weight: 900; }
+    .delivery-badge .label { color: #d4b896; font-size: 0.82rem; }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; max-width: 1100px; margin: 0 auto; align-items: start; }
+    @media(max-width:768px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-cards { display: flex; flex-direction: column; gap: 20px; }
+    .contact-card {
+      background: #fff; border-radius: 16px; padding: 24px;
+      display: flex; gap: 16px; align-items: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06); transition: all 0.3s;
+    }
+    .contact-card:hover { transform: translateX(-6px); box-shadow: 0 8px 32px rgba(192,57,43,0.12); }
+    .contact-icon {
+      width: 50px; height: 50px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      display: flex; align-items: center; justify-content: center;
+      color: white; flex-shrink: 0; font-size: 1.3rem;
+    }
+    .contact-info h4 { font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+    .contact-info p { color: #8B7355; font-size: 0.9rem; }
+    .contact-info a { color: var(--red); text-decoration: none; font-weight: 600; }
+    .whatsapp-btn {
+      display: flex; align-items: center; gap: 12px; background: #25D366;
+      color: white; padding: 18px 32px; border-radius: 16px; font-weight: 700;
+      font-size: 1.05rem; text-decoration: none; transition: all 0.3s;
+      justify-content: center; margin-top: 8px;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.35);
+    }
+    .whatsapp-btn:hover { background: #1da851; transform: translateY(-3px); box-shadow: 0 12px 32px rgba(37,211,102,0.4); }
+    .map-box {
+      background: linear-gradient(135deg, #1A0A00, #2C1810);
+      border-radius: 20px; overflow: hidden; height: 320px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; border: 2px solid rgba(192,57,43,0.3);
+    }
+    .map-pin-container { text-align: center; }
+    .map-pin { font-size: 4rem; animation: pinBounce 2s ease-in-out infinite; display: block; }
+    @keyframes pinBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    .map-address { color: var(--gold); font-size: 1rem; font-weight: 700; margin-top: 12px; }
+    .map-sub { color: #9a7a60; font-size: 0.85rem; margin-top: 4px; }
+    .map-rings { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); }
+    .ring { position: absolute; border-radius: 50%; background: rgba(192,57,43,0.3); transform: translateX(-50%); }
+    .ring-1 { width: 60px; height: 20px; left: 0; top: 0; animation: ringPulse 2s ease-out infinite; }
+    .ring-2 { width: 100px; height: 32px; left: 0; top: -6px; animation: ringPulse 2s ease-out 0.4s infinite; }
+    .ring-3 { width: 140px; height: 44px; left: 0; top: -12px; animation: ringPulse 2s ease-out 0.8s infinite; }
+    @keyframes ringPulse {
+      0% { opacity: 0.6; transform: translateX(-50%) scale(0.8); }
+      100% { opacity: 0; transform: translateX(-50%) scale(1.3); }
+    }
+
+    /* FOOTER */
+    footer { background: var(--dark); padding: 60px 20px 32px; text-align: center; }
+    .footer-logo { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold); margin-bottom: 8px; letter-spacing: 3px; }
+    .footer-tagline-ar { color: #6B4A30; font-size: 0.9rem; margin-bottom: 4px; }
+    .footer-tagline-fr { color: #4a3020; font-size: 0.82rem; font-style: italic; margin-bottom: 32px; }
+    .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+    .footer-links a { color: #6B4A30; font-size: 0.9rem; text-decoration: none; cursor: pointer; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.06); margin-bottom: 24px; }
+    .footer-copy { color: #3D2210; font-size: 0.8rem; }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px); z-index: 9999;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-box {
+      background: #fff; border-radius: 24px; padding: 40px;
+      max-width: 480px; width: 100%; position: relative;
+      animation: modalSlideIn 0.3s ease;
+    }
+    @keyframes modalSlideIn {
+      from { opacity: 0; transform: scale(0.9) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-header { margin-bottom: 28px; }
+    .modal-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--dark); margin-bottom: 6px; }
+    .modal-item {
+      background: var(--cream); border-radius: 12px; padding: 14px 18px;
+      margin-bottom: 24px; border-right: 4px solid var(--red);
+    }
+    .modal-item-name { font-weight: 700; color: var(--dark); }
+    .modal-item-fr { color: #9a7a60; font-size: 0.82rem; font-style: italic; margin-top: 2px; }
+    .modal-item-price { color: var(--red); font-weight: 700; font-size: 1.1rem; }
+    .form-group { margin-bottom: 18px; }
+    .form-label { display: block; font-weight: 700; color: var(--charcoal); margin-bottom: 8px; font-size: 0.9rem; }
+    .form-input {
+      width: 100%; padding: 14px 18px; border-radius: 12px; border: 2px solid #e8d5c4;
+      font-size: 1rem; font-family: 'Tajawal', sans-serif; color: var(--dark);
+      background: var(--cream); transition: border-color 0.2s; outline: none;
+    }
+    .form-input:focus { border-color: var(--red); }
+    .form-textarea {
+      width: 100%; padding: 14px 18px; border-radius: 12px; border: 2px solid #e8d5c4;
+      font-size: 1rem; font-family: 'Tajawal', sans-serif; color: var(--dark);
+      background: var(--cream); resize: none; height: 100px;
+      transition: border-color 0.2s; outline: none;
+    }
+    .form-textarea:focus { border-color: var(--red); }
+    .modal-actions { display: flex; gap: 12px; margin-top: 24px; }
+    .modal-cancel {
+      flex: 1; padding: 14px; border-radius: 12px; border: 2px solid #e8d5c4;
+      background: transparent; color: #8B7355; font-weight: 700; font-size: 1rem;
+      cursor: pointer; font-family: 'Tajawal', sans-serif; transition: all 0.2s;
+    }
+    .modal-cancel:hover { border-color: var(--red); color: var(--red); }
+    .modal-confirm {
+      flex: 2; padding: 14px; border-radius: 12px; border: none;
+      background: #25D366; color: white; font-weight: 700; font-size: 1rem;
+      cursor: pointer; font-family: 'Tajawal', sans-serif;
+      display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;
+    }
+    .modal-confirm:hover { background: #1da851; transform: translateY(-2px); }
+    .modal-close {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--cream); border: none; width: 36px; height: 36px;
+      border-radius: 50%; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; color: #8B7355; font-size: 1.2rem; transition: all 0.2s;
+    }
+    .modal-close:hover { background: #f0d9c8; color: var(--red); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* SCROLL TOP */
+    .scroll-top {
+      position: fixed; bottom: 32px; left: 32px; z-index: 999;
+      width: 48px; height: 48px; background: var(--red); color: white;
+      border-radius: 50%; border: none; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(192,57,43,0.4); transition: all 0.2s; font-size: 1.2rem;
+    }
+    .scroll-top.show { display: flex; }
+    .scroll-top:hover { background: var(--red-dark); transform: translateY(-3px); }
+
+    /* BILINGUAL TEXT */
+    .txt-fr { display: none; }
+    body.fr .txt-ar { display: none; }
+    body.fr .txt-fr { display: block; }
+    body.fr .txt-fr-inline { display: inline; }
+    .txt-fr-inline { display: none; }
+    body.fr span.txt-ar { display: none; }
+    body.fr span.txt-fr { display: inline; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-logo">
+    <span>🍽</span> BEST FOOD
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="navScrollTo('hero')"><span class="txt-ar">الرئيسية</span><span class="txt-fr">Accueil</span></a></li>
+    <li><a onclick="navScrollTo('menu')"><span class="txt-ar">القائمة</span><span class="txt-fr">Menu</span></a></li>
+    <li><a onclick="navScrollTo('drinks')"><span class="txt-ar">المشروبات</span><span class="txt-fr">Boissons</span></a></li>
+    <li><a onclick="navScrollTo('delivery')"><span class="txt-ar">التوصيل</span><span class="txt-fr">Livraison</span></a></li>
+    <li><a onclick="navScrollTo('contact')"><span class="txt-ar">التواصل</span><span class="txt-fr">Contact</span></a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="lang-switcher">
+      <button class="lang-btn ar active" onclick="setLang('ar')">ع</button>
+      <button class="lang-btn fr" onclick="setLang('fr')">Fr</button>
+    </div>
+    <button class="nav-cta nav-cta-desktop" onclick="navScrollTo('menu')">
+      🛒 <span class="txt-ar">اطلب الآن</span><span class="txt-fr">Commander</span>
+    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🌟 <span class="txt-ar">تجربة طعام لا تُنسى</span><span class="txt-fr">Une expérience culinaire inoubliable</span></div>
+    <h1 class="hero-brand">BEST <span>FOOD</span></h1>
+    <p class="hero-tagline-ar txt-ar">ذوق أصيل، وصفات الجدة بلمسة عصرية</p>
+    <p class="hero-tagline-fr txt-fr">Saveurs authentiques, recettes traditionnelles revisitées</p>
+    <div class="hero-buttons" style="margin-top:32px">
+      <button class="btn-primary" onclick="navScrollTo('menu')">
+        🛒 <span class="txt-ar">اطلب الآن</span><span class="txt-fr">Commander maintenant</span>
+      </button>
+      <button class="btn-outline" onclick="navScrollTo('menu')">
+        👀 <span class="txt-ar">شاهد القائمة</span><span class="txt-fr">Voir le menu</span>
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label"><span class="txt-ar">وجبة يومياً</span><span class="txt-fr">Plats/jour</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label"><span class="txt-ar">تقييم العملاء</span><span class="txt-fr">Avis clients</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">30<span style="font-size:1.4rem">د</span></div>
+        <div class="stat-label"><span class="txt-ar">متوسط التوصيل</span><span class="txt-fr">Livraison moy.</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10+</div>
+        <div class="stat-label"><span class="txt-ar">سنوات خبرة</span><span class="txt-fr">Ans d'expérience</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU SECTION -->
+<section class="section" id="menu" style="background:var(--cream)">
+  <div class="section-header reveal">
+    <span class="section-eyebrow"><span class="txt-ar">قائمة الطعام</span><span class="txt-fr">Notre Menu</span></span>
+    <h2 class="section-title">
+      <span class="txt-ar">اكتشف <span style="color:var(--red)">نكهاتنا</span></span>
+      <span class="txt-fr">Découvrez nos <span style="color:var(--red)">saveurs</span></span>
+    </h2>
+    <p style="color:#8B7355;margin-top:12px;font-size:1rem;max-width:500px;margin-left:auto;margin-right:auto">
+      <span class="txt-ar">كل طبق محضَّر بحب وشغف، من أيدي أمهر الطهاة</span>
+      <span class="txt-fr">Chaque plat est préparé avec amour par nos meilleurs chefs</span>
+    </p>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- CATEGORIES VIEW -->
+  <div id="categoriesView">
+    <div class="categories-grid reveal">
+      <div class="category-card" onclick="showDishes('couscous')">
+        <img src="couscous_1.jpg" alt="الكسكس" onerror="this.style.background='linear-gradient(135deg,#c8a97a,#8B5E3C)';this.style.display='block';this.parentElement.style.background='linear-gradient(135deg,#c8a97a,#8B5E3C)'"/>
+        <div class="category-overlay">
+          <div class="category-name-ar txt-ar">الكسكس</div>
+          <div class="category-name-fr txt-fr" style="display:block">Couscous</div>
+          <div class="category-name-fr txt-ar" style="font-style:italic;color:var(--gold);font-size:0.85rem;margin-top:3px">Couscous</div>
+          <div class="category-count">🍽 <span class="txt-ar">طبقان</span><span class="txt-fr">2 Plats</span></div>
+        </div>
+        <div class="category-arrow">←</div>
+      </div>
+      <div class="category-card" onclick="showDishes('tagine')">
+        <img src="tagine_1.jpg" alt="الطاجين" onerror="this.style.opacity='0'"/>
+        <div class="category-overlay">
+          <div class="category-name-ar txt-ar">الطاجين</div>
+          <div class="category-name-fr txt-fr" style="display:block">Tajine</div>
+          <div class="category-name-fr txt-ar" style="font-style:italic;color:var(--gold);font-size:0.85rem;margin-top:3px">Tajine</div>
+          <div class="category-count">🍽 <span class="txt-ar">طبقان</span><span class="txt-fr">2 Plats</span></div>
+        </div>
+        <div class="category-arrow">←</div>
+      </div>
+      <div class="category-card" onclick="showDishes('pizza')">
+        <img src="pizza_1.jpg" alt="البيتزا" onerror="this.style.opacity='0'"/>
+        <div class="category-overlay">
+          <div class="category-name-ar txt-ar">البيتزا</div>
+          <div class="category-name-fr txt-fr" style="display:block">Pizza</div>
+          <div class="category-name-fr txt-ar" style="font-style:italic;color:var(--gold);font-size:0.85rem;margin-top:3px">Pizza</div>
+          <div class="category-count">🍕 <span class="txt-ar">طبقان</span><span class="txt-fr">2 Plats</span></div>
+        </div>
+        <div class="category-arrow">←</div>
+      </div>
+      <div class="category-card" onclick="showDishes('tacos')">
+        <img src="tacos_1.jpg" alt="الطاكوس" onerror="this.style.opacity='0'"/>
+        <div class="category-overlay">
+          <div class="category-name-ar txt-ar">الطاكوس</div>
+          <div class="category-name-fr txt-fr" style="display:block">Tacos</div>
+          <div class="category-name-fr txt-ar" style="font-style:italic;color:var(--gold);font-size:0.85rem;margin-top:3px">Tacos</div>
+          <div class="category-count">🌮 <span class="txt-ar">طبقان</span><span class="txt-fr">2 Plats</span></div>
+        </div>
+        <div class="category-arrow">←</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DISHES VIEW -->
+  <div id="dishesView">
+    <button class="back-btn" onclick="showCategories()">
+      <span class="back-icon">→</span>
+      <span class="txt-ar">رجوع للقائمة الرئيسية</span>
+      <span class="txt-fr">Retour au menu</span>
+    </button>
+    <div class="dishes-category-title">
+      <h3 id="dishCategoryName"></h3>
+      <p id="dishCategoryFr" style="color:#9a7a60;font-style:italic"></p>
+    </div>
+    <div class="dishes-grid" id="dishesGrid"></div>
+  </div>
+</section>
+
+<!-- DRINKS SECTION -->
+<section class="drinks-section" id="drinks">
+  <div class="section-header reveal">
+    <span class="section-eyebrow" style="color:var(--gold)">
+      <span class="txt-ar">المشروبات</span><span class="txt-fr">Boissons</span>
+    </span>
+    <h2 class="section-title" style="color:#fff">
+      <span class="txt-ar">أشهى <span style="color:var(--gold)">المشروبات</span></span>
+      <span class="txt-fr">Nos meilleures <span style="color:var(--gold)">boissons</span></span>
+    </h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="drinks-grid" id="drinksGrid"></div>
+</section>
+
+<!-- DELIVERY SECTION -->
+<section class="delivery-section" id="delivery">
+  <div class="delivery-grid">
+    <div>
+      <div class="reveal">
+        <span class="section-eyebrow" style="color:var(--gold)">
+          <span class="txt-ar">خدمة التوصيل</span><span class="txt-fr">Service Livraison</span>
+        </span>
+        <h2 class="section-title" style="color:#fff;margin-top:8px">
+          <span class="txt-ar">توصيل <span style="color:var(--gold)">سريع</span><br/>إلى باب بيتك</span>
+          <span class="txt-fr">Livraison <span style="color:var(--gold)">rapide</span><br/>à votre porte</span>
+        </h2>
+        <div class="section-line" style="margin:20px 0 0"></div>
+      </div>
+      <div class="delivery-features">
+        <div class="delivery-feature reveal reveal-delay-1">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-text">
+            <h4>
+              <span class="txt-ar">أسرع توصيل في المدينة</span>
+              <span class="txt-fr">La livraison la plus rapide</span>
+              <em class="txt-ar">Livraison express</em>
+              <em class="txt-fr">توصيل سريع</em>
+            </h4>
+            <p>
+              <span class="txt-ar">نضمن وصول طلبك دافئاً طازجاً في أقل من 45 دقيقة</span>
+              <span class="txt-fr">Votre commande arrive chaude et fraîche en moins de 45 minutes</span>
+            </p>
+          </div>
+        </div>
+        <div class="delivery-feature reveal reveal-delay-2">
+          <div class="feature-icon">📍</div>
+          <div class="feature-text">
+            <h4>
+              <span class="txt-ar">تتبع طلبك لحظة بلحظة</span>
+              <span class="txt-fr">Suivez votre commande en direct</span>
+              <em class="txt-ar">Suivi en temps réel</em>
+              <em class="txt-fr">تتبع مباشر</em>
+            </h4>
+            <p>
+              <span class="txt-ar">عبر واتساب، سترى مراحل تحضير طلبك حتى وصوله</span>
+              <span class="txt-fr">Via WhatsApp, suivez chaque étape de la préparation</span>
+            </p>
+          </div>
+        </div>
+        <div class="delivery-feature reveal reveal-delay-3">
+          <div class="feature-icon">🎁</div>
+          <div class="feature-text">
+            <h4>
+              <span class="txt-ar">توصيل مجاني فوق 150 درهم</span>
+              <span class="txt-fr">Livraison gratuite dès 150 DH</span>
+              <em class="txt-ar">Livraison offerte</em>
+              <em class="txt-fr">توصيل مجاني</em>
+            </h4>
+            <p>
+              <span class="txt-ar">عند تجاوز مبلغ طلبك 150 درهم، التوصيل هدية منا إليك</span>
+              <span class="txt-fr">Pour toute commande supérieure à 150 DH, la livraison est offerte</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="moto-container reveal">
+      <span class="moto-emoji">🏍️</span>
+      <div class="delivery-badge">
+        <div class="time">⏱ 30-45</div>
+        <div class="label"><span class="txt-ar">دقيقة متوسط التوصيل</span><span class="txt-fr">minutes en moyenne</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="section" id="contact" style="background:#FDF6EC">
+  <div class="section-header reveal">
+    <span class="section-eyebrow"><span class="txt-ar">تواصل معنا</span><span class="txt-fr">Contactez-nous</span></span>
+    <h2 class="section-title">
+      <span class="txt-ar">نحن في <span>خدمتك</span></span>
+      <span class="txt-fr">Nous sommes à <span>votre service</span></span>
+    </h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-cards">
+      <div class="contact-card reveal">
+        <div class="contact-icon">📞</div>
+        <div class="contact-info">
+          <h4><span class="txt-ar">هاتف المطعم</span><span class="txt-fr">Téléphone</span></h4>
+          <p><a href="tel:+212612345678">+212 6 12 34 56 78</a></p>
+          <p style="margin-top:4px;font-size:0.8rem"><span class="txt-ar">متاح 10ص - 11م</span><span class="txt-fr">Disponible 10h - 23h</span></p>
+        </div>
+      </div>
+      <div class="contact-card reveal">
+        <div class="contact-icon">📍</div>
+        <div class="contact-info">
+          <h4><span class="txt-ar">العنوان</span><span class="txt-fr">Adresse</span></h4>
+          <p><span class="txt-ar">شارع محمد الخامس، الرباط</span><span class="txt-fr">Avenue Mohammed V, Rabat</span></p>
+          <p style="margin-top:4px;font-size:0.8rem"><span class="txt-ar">بجانب فندق بالاس</span><span class="txt-fr">Près de l'hôtel Palace</span></p>
+        </div>
+      </div>
+      <div class="contact-card reveal">
+        <div class="contact-icon">🕐</div>
+        <div class="contact-info">
+          <h4><span class="txt-ar">أوقات العمل</span><span class="txt-fr">Horaires</span></h4>
+          <p><span class="txt-ar">كل يوم: 10 صباحاً - 11 مساءً</span><span class="txt-fr">Tous les jours: 10h - 23h</span></p>
+          <p style="margin-top:4px;font-size:0.8rem"><span class="txt-ar">الجمعة: 12م - 11م</span><span class="txt-fr">Vendredi: 12h - 23h</span></p>
+        </div>
+      </div>
+      <a class="whatsapp-btn reveal" href="https://wa.me/212612345678?text=مرحباً، أريد الاستفسار عن الطلبات 😊" target="_blank">
+        <span style="font-size:1.4rem">💬</span>
+        <span class="txt-ar">تواصل عبر واتساب</span>
+        <span class="txt-fr">Contactez-nous sur WhatsApp</span>
+      </a>
+    </div>
+    <div class="map-box reveal">
+      <div class="map-pin-container">
+        <div class="map-rings">
+          <div class="ring ring-1"></div>
+          <div class="ring ring-2"></div>
+          <div class="ring ring-3"></div>
+        </div>
+        <span class="map-pin">📍</span>
+        <div class="map-address">BEST FOOD</div>
+        <div class="map-sub"><span class="txt-ar">شارع محمد الخامس، الرباط</span><span class="txt-fr">Avenue Mohammed V, Rabat</span></div>
+        <a href="https://maps.google.com" target="_blank"
+           style="display:inline-block;margin-top:16px;background:rgba(192,57,43,0.9);color:white;padding:10px 24px;border-radius:50px;font-size:0.9rem;font-weight:700;text-decoration:none;transition:all 0.2s"
+           onmouseover="this.style.background='#C0392B'" onmouseout="this.style.background='rgba(192,57,43,0.9)'">
+          🗺 <span class="txt-ar">افتح في الخريطة</span><span class="txt-fr">Ouvrir dans Maps</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🍽 BEST FOOD</div>
+  <p class="footer-tagline-ar txt-ar">ذوق أصيل بلمسة عصرية منذ 2014</p>
+  <p class="footer-tagline-fr txt-fr">Saveurs authentiques depuis 2014</p>
+  <div class="footer-links">
+    <a onclick="navScrollTo('hero')"><span class="txt-ar">الرئيسية</span><span class="txt-fr">Accueil</span></a>
+    <a onclick="navScrollTo('menu')"><span class="txt-ar">القائمة</span><span class="txt-fr">Menu</span></a>
+    <a onclick="navScrollTo('drinks')"><span class="txt-ar">المشروبات</span><span class="txt-fr">Boissons</span></a>
+    <a onclick="navScrollTo('delivery')"><span class="txt-ar">التوصيل</span><span class="txt-fr">Livraison</span></a>
+    <a onclick="navScrollTo('contact')"><span class="txt-ar">التواصل</span><span class="txt-fr">Contact</span></a>
+  </div>
+  <div class="footer-divider"></div>
+  <p class="footer-copy">© 2025 BEST FOOD. <span class="txt-ar">جميع الحقوق محفوظة.</span><span class="txt-fr">Tous droits réservés.</span></p>
+</footer>
+
+<!-- SCROLL TOP -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ORDER MODAL -->
+<div class="modal-overlay" id="orderModal" style="display:none" onclick="closeModalOnOverlay(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-header">
+      <h2 class="modal-title">🛒 <span class="txt-ar">أكمل طلبك</span><span class="txt-fr">Finalisez votre commande</span></h2>
+      <p style="color:#8B7355;font-size:0.9rem;margin-top:4px">
+        <span class="txt-ar">أدخل بياناتك وسنتصل بك فوراً</span>
+        <span class="txt-fr">Renseignez vos informations et nous vous contacterons</span>
+      </p>
+    </div>
+    <div class="modal-item">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div class="modal-item-name" id="modalItemName"></div>
+          <div class="modal-item-fr" id="modalItemFr"></div>
+        </div>
+        <div class="modal-item-price" id="modalItemPrice"></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">👤 <span class="txt-ar">اسمك الكريم *</span><span class="txt-fr">Votre nom *</span></label>
+      <input class="form-input" id="customerName" placeholder="..." type="text" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">📞 <span class="txt-ar">رقم هاتفك *</span><span class="txt-fr">Votre téléphone *</span></label>
+      <input class="form-input" id="customerPhone" placeholder="+212 6XX XXX XXX" type="tel" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">📍 <span class="txt-ar">عنوان التوصيل *</span><span class="txt-fr">Adresse de livraison *</span></label>
+      <textarea class="form-textarea" id="customerAddress" placeholder="..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">
+        <span class="txt-ar">إلغاء</span><span class="txt-fr">Annuler</span>
+      </button>
+      <button class="modal-confirm" onclick="sendWhatsAppOrder()">
+        <span>💬</span>
+        <span class="txt-ar">إرسال عبر واتساب</span>
+        <span class="txt-fr">Envoyer via WhatsApp</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========================
+// DATA
+// ========================
+const menuData = {
+  couscous: {
+    nameAr: 'الكسكس',
+    nameFr: 'Couscous',
+    dishes: [
+      {
+        id: 1,
+        nameAr: 'كسكس بسبع خضاري',
+        nameFr: 'Couscous aux 7 légumes',
+        descAr: 'التقليد المغربي الأصيل بسبعة خضروات طازجة ومرق عطري',
+        descFr: 'La tradition marocaine authentique avec sept légumes frais et un bouillon aromatique',
+        price: 75,
+        img: 'couscous_1.jpg'
+      },
+      {
+        id: 2,
+        nameAr: 'كسكس تفاية',
+        nameFr: 'Couscous Tfaya',
+        descAr: 'كسكس بالبصل المكرمل والزبيب والحمص على طريقة فاس العريقة',
+        descFr: 'Couscous aux oignons caramélisés, raisins secs et pois chiches à la façon de Fès',
+        price: 85,
+        img: 'couscous_2.jpg'
+      }
+    ]
+  },
+  tagine: {
+    nameAr: 'الطاجين',
+    nameFr: 'Tajine',
+    dishes: [
+      {
+        id: 3,
+        nameAr: 'طاجين لحم بالبرقوق',
+        nameFr: 'Tajine d\'agneau aux pruneaux',
+        descAr: 'لحم الضأن الطري مع البرقوق والعسل والسمسم في طاجين فخاري أصيل',
+        descFr: 'Agneau tendre aux pruneaux, miel et sésame dans un tajine en terre cuite authentique',
+        price: 95,
+        img: 'tagine_1.jpg'
+      },
+      {
+        id: 4,
+        nameAr: 'طاجين دجاج بالزيتون',
+        nameFr: 'Tajine de poulet aux olives',
+        descAr: 'دجاج طازج بالزيتون والليمون المخلل والبهارات المغربية الأصيلة',
+        descFr: 'Poulet frais aux olives, citron confit et épices marocaines authentiques',
+        price: 79,
+        img: 'tagine_2.jpg'
+      }
+    ]
+  },
+  pizza: {
+    nameAr: 'البيتزا',
+    nameFr: 'Pizza',
+    dishes: [
+      {
+        id: 5,
+        nameAr: 'بيتزا 4 فصول',
+        nameFr: 'Pizza 4 Saisons',
+        descAr: 'بيتزا مقسمة بأربعة مكونات فاخرة: فطر، زيتون، فلفل وجبن موزاريلا',
+        descFr: 'Pizza divisée en quatre garnitures de luxe: champignons, olives, poivrons et mozzarella',
+        price: 65,
+        img: 'pizza_1.jpg'
+      },
+      {
+        id: 6,
+        nameAr: 'بيتزا مارغريتا',
+        nameFr: 'Pizza Margherita',
+        descAr: 'البيتزا الإيطالية الكلاسيكية بصلصة الطماطم وجبن الموزاريلا الطازج والريحان',
+        descFr: 'La grande classique italienne: sauce tomate, mozzarella fraîche et basilic',
+        price: 55,
+        img: 'pizza_2.jpg'
+      }
+    ]
+  },
+  tacos: {
+    nameAr: 'الطاكوس',
+    nameFr: 'Tacos',
+    dishes: [
+      {
+        id: 7,
+        nameAr: 'طاكوس دجاج',
+        nameFr: 'Tacos Poulet',
+        descAr: 'دجاج مشوي متبل بالبهارات مع صلصة ألبان وخضروات طازجة في خبز ليّن',
+        descFr: 'Poulet grillé épicé avec sauce blanche et légumes frais dans une galette moelleuse',
+        price: 45,
+        img: 'tacos_1.jpg'
+      },
+      {
+        id: 8,
+        nameAr: 'طاكوس ميكس',
+        nameFr: 'Tacos Mix',
+        descAr: 'مزيج رائع من الدجاج واللحم المفروم مع البطاطا والصلصة الخاصة',
+        descFr: 'Savoureux mélange de poulet et viande hachée avec frites et sauce maison',
+        price: 55,
+        img: 'tacos_2.jpg'
+      }
+    ]
+  }
+};
+
+const drinksData = [
+  {
+    id: 9,
+    nameAr: 'عصير برتقال',
+    nameFr: 'Jus d\'orange',
+    descAr: 'عصير برتقال طبيعي 100% معصور لحظياً أمامك',
+    descFr: 'Jus d\'orange 100% naturel, pressé à la minute devant vous',
+    price: 20,
+    img: 'drink_1.jpg'
+  },
+  {
+    id: 10,
+    nameAr: 'مشروب غازي',
+    nameFr: 'Boisson gazeuse',
+    descAr: 'مشروب غازي منعش بمختلف النكهات المتاحة',
+    descFr: 'Boisson gazeuse rafraîchissante en différentes saveurs',
+    price: 15,
+    img: 'drink_2.jpg'
+  }
+];
+
+// ========================
+// STATE
+// ========================
+let currentLang = 'ar';
+let currentItem = null;
+
+// ========================
+// LANGUAGE
+// ========================
+function setLang(lang) {
+  currentLang = lang;
+  document.body.classList.toggle('fr', lang === 'fr');
+  document.documentElement.lang = lang === 'fr' ? 'fr' : 'ar';
+  document.documentElement.dir = lang === 'fr' ? 'ltr' : 'rtl';
+  document.querySelector('.lang-btn.ar').classList.toggle('active', lang === 'ar');
+  document.querySelector('.lang-btn.fr').classList.toggle('active', lang === 'fr');
+  // re-render drinks
+  renderDrinks();
+}
+
+// ========================
+// NAVIGATION
+// ========================
+function navScrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('navLinks').classList.remove('open');
+}
+
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ========================
+// CATEGORY SYSTEM
+// ========================
+function showDishes(category) {
+  const data = menuData[category];
+  if (!data) return;
+
+  // Hide categories, show dishes
+  const catView = document.getElementById('categoriesView');
+  const dishView = document.getElementById('dishesView');
+
+  catView.style.display = 'none';
+  dishView.style.display = 'block';
+
+  document.getElementById('dishCategoryName').textContent = data.nameAr + ' — ' + data.nameFr;
+  document.getElementById('dishCategoryFr').textContent = '';
+
+  const grid = document.getElementById('dishesGrid');
+  grid.innerHTML = data.dishes.map(dish => `
+    <div class="dish-card">
+      <div class="dish-img">
+        <img src="${dish.img}" alt="${dish.nameAr}"
+             onerror="this.parentElement.style.background='linear-gradient(135deg,#c8a97a,#8B5E3C)';this.style.display='none'"/>
+      </div>
+      <div class="dish-body">
+        <div class="dish-name-ar">${dish.nameAr}</div>
+        <div class="dish-name-fr">${dish.nameFr}</div>
+        <div class="dish-desc">
+          <span class="txt-ar">${dish.descAr}</span>
+          <span class="txt-fr">${dish.descFr}</span>
+        </div>
+        <div class="dish-footer">
+          <div class="dish-price">${dish.price} <span>درهم / DH</span></div>
+          <button class="order-btn" onclick='openModal(${JSON.stringify(dish)})'>
+            🛒 <span class="txt-ar">اطلب</span><span class="txt-fr">Commander</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Apply lang to new content
+  applyLangToNew();
+
+  // Scroll to menu
+  setTimeout(() => {
+    document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+}
+
+function showCategories() {
+  document.getElementById('categoriesView').style.display = 'block';
+  document.getElementById('dishesView').style.display = 'none';
+  setTimeout(() => {
+    document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+}
+
+function applyLangToNew() {
+  // After dynamic render, txt-ar/txt-fr classes are in new DOM
+  // The CSS body.fr rule handles this automatically
+}
+
+// ========================
+// DRINKS RENDER
+// ========================
+function renderDrinks() {
+  const grid = document.getElementById('drinksGrid');
+  grid.innerHTML = drinksData.map(drink => `
+    <div class="drink-card">
+      <div class="drink-img">
+        <img src="${drink.img}" alt="${drink.nameAr}"
+             onerror="this.parentElement.style.background='linear-gradient(135deg,#2c1810,#1a0a00)';this.style.display='none'"/>
+      </div>
+      <div class="drink-body">
+        <div class="drink-name-ar">${currentLang === 'ar' ? drink.nameAr : drink.nameFr}</div>
+        <div class="drink-name-fr">${currentLang === 'ar' ? drink.nameFr : drink.nameAr}</div>
+        <div class="drink-desc">${currentLang === 'ar' ? drink.descAr : drink.descFr}</div>
+        <div class="drink-footer">
+          <div class="drink-price">${drink.price} <span style="font-size:0.75rem;font-family:'Tajawal',sans-serif;font-weight:400;color:#9a7a60">DH</span></div>
+          <button class="drink-order-btn" onclick='openModal(${JSON.stringify(drink)})'>
+            🥤 ${currentLang === 'ar' ? 'اطلب' : 'Commander'}
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ========================
+// MODAL
+// ========================
+function openModal(item) {
+  currentItem = item;
+  const nameAr = item.nameAr || item.name || '';
+  const nameFr = item.nameFr || '';
+  document.getElementById('modalItemName').textContent = nameAr;
+  document.getElementById('modalItemFr').textContent = nameFr;
+  document.getElementById('modalItemPrice').textContent = item.price + ' DH';
+  document.getElementById('customerName').value = '';
+  document.getElementById('customerPhone').value = '';
+  document.getElementById('customerAddress').value = '';
+  document.getElementById('orderModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('orderModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function closeModalOnOverlay(e) {
+  if (e.target === document.getElementById('orderModal')) closeModal();
+}
+
+function sendWhatsAppOrder() {
+  const name = document.getElementById('customerName').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+  const address = document.getElementById('customerAddress').value.trim();
+  if (!name || !phone || !address) {
+    alert(currentLang === 'ar' ? '⚠️ الرجاء ملء جميع الحقول المطلوبة' : '⚠️ Veuillez remplir tous les champs obligatoires');
+    return;
+  }
+  const itemName = currentItem.nameAr || currentItem.name;
+  const msg = `🍽 *Commande BEST FOOD*\n\n` +
+    `👤 *${currentLang === 'ar' ? 'الاسم' : 'Nom'}:* ${name}\n` +
+    `📞 *${currentLang === 'ar' ? 'الهاتف' : 'Téléphone'}:* ${phone}\n` +
+    `📍 *${currentLang === 'ar' ? 'العنوان' : 'Adresse'}:* ${address}\n\n` +
+    `🛒 *${currentLang === 'ar' ? 'الطلب' : 'Commande'}:*\n` +
+    `• ${itemName} — ${currentItem.price} DH\n\n` +
+    `🙏 ${currentLang === 'ar' ? 'شكراً على ثقتكم! سنتصل بكم قريباً.' : 'Merci pour votre confiance! Nous vous contacterons bientôt.'}`;
+  const encoded = encodeURIComponent(msg);
+  window.open(`https://wa.me/212612345678?text=${encoded}`, '_blank');
+  closeModal();
+}
+
+// ========================
+// SCROLL REVEAL
+// ========================
+function handleReveal() {
+  document.querySelectorAll('.reveal').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 60) el.classList.add('visible');
+  });
+  const btn = document.getElementById('scrollTopBtn');
+  if (btn) btn.classList.toggle('show', window.scrollY > 400);
+}
+
+window.addEventListener('scroll', handleReveal);
+window.addEventListener('load', () => {
+  renderDrinks();
+  handleReveal();
+});
+</script>
+</body>
+</html>
